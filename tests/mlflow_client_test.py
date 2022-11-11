@@ -103,9 +103,9 @@ def train_model():
     mlflow.set_tag("tag", "version1")
 
     # Test artifact
-    # with open("tests/data/artifact_folder/test.txt", "w") as f:
-    #     f.write("hello world!")
-    # mlflow.log_artifact("tests/data/artifact_folder/test.txt", "testlocation")
+    with open("tests/data/artifact_folder/test.txt", "w") as f:
+        f.write("hello world!")
+    mlflow.log_artifact("tests/data/artifact_folder/test.txt", "testlocation")
 
 if __name__ == "__main__":
     # set_env_vars()

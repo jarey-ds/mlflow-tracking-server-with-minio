@@ -1,7 +1,7 @@
 FROM python:3.7
 
-RUN pip install mlflow==1.7.2 && \
-    pip install boto3==1.9.240
+RUN pip install mlflow==1.30.0 && \
+    pip install boto3==1.26.7
 
 ENV PORT 5500
 

@@ -9,9 +9,9 @@ services:
         volumes:
             - ~/workspace/com.github/minio:/darkt-minio/storage
         expose:
-             - "9000"
+             - "9050"
         ports:
-            - "9000:9000"
+            - "9050:9000"
         environment:
             MINIO_ACCESS_KEY: "minio_id"
             MINIO_SECRET_KEY: "minio_key"
@@ -30,7 +30,7 @@ services:
             - ~/workspace/com.github/mlflow:/mlflow
         environment:
             FILE_DIR: /mlflow
-            MLFLOW_S3_ENDPOINT_URL: http://darkt-minio:9000
+            MLFLOW_S3_ENDPOINT_URL: http://darkt-minio:9050
             AWS_ACCESS_KEY_ID: "minio_id"
             AWS_SECRET_ACCESS_KEY: "minio_key"
             PORT: "5500"
