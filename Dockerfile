@@ -1,6 +1,6 @@
-FROM python:3.7
+FROM python:3.8
 
-RUN pip install mlflow==1.30.0 && \
+RUN pip install mlflow==2.4.0 && \
     pip install boto3==1.26.7
 
 ENV PORT 5500

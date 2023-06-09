@@ -1,7 +1,7 @@
 import json
 import os
 from minio import Minio
-from minio.error import ResponseError
+#from minio.error import ResponseError
 import mlflow
 from random import random, randint
 
@@ -23,9 +23,9 @@ def create_s3_bucket():
     print(minioClient.list_buckets())
 
     try:
-        if not minioClient.bucket_exists("testlocation"):
-            minioClient.make_bucket('testlocation')
-    except ResponseError as err:
+        if not minioClient.bucket_exists("mlflow"):
+            minioClient.make_bucket('mlflow')
+    except Exception as err:
         print(err)
 
     buckets = minioClient.list_buckets()
@@ -39,36 +39,36 @@ def create_s3_bucket():
             "Effect":"Allow",
             "Principal":{"AWS":"*"},
             "Action":"s3:GetBucketLocation",
-            "Resource":"arn:aws:s3:::testlocation"
+            "Resource":"arn:aws:s3:::mlflow"
             },
             {
             "Sid":"",
             "Effect":"Allow",
             "Principal":{"AWS":"*"},
             "Action":"s3:ListBucket",
-            "Resource":"arn:aws:s3:::testlocation"
+            "Resource":"arn:aws:s3:::mlflow"
             },
             {
             "Sid":"",
             "Effect":"Allow",
             "Principal":{"AWS":"*"},
             "Action":"s3:GetObject",
-            "Resource":"arn:aws:s3:::testlocation/*"
+            "Resource":"arn:aws:s3:::mlflow/*"
             },
             {
             "Sid":"",
             "Effect":"Allow",
             "Principal":{"AWS":"*"},
             "Action":"s3:PutObject",
-            "Resource":"arn:aws:s3:::testlocation/*"
+            "Resource":"arn:aws:s3:::mlflow/*"
             }
 
         ]}
 
-    minioClient.set_bucket_policy('testlocation', json.dumps(policy))
+    minioClient.set_bucket_policy('mlflow', json.dumps(policy))
 
     # List all object paths in bucket that begin with my-prefixname.
-    objects = minioClient.list_objects('testlocation', prefix='my',
+    objects = minioClient.list_objects('mlflow', prefix='my',
                               recursive=True)
     for obj in objects:
         print(obj.bucket_name, obj.object_name.encode('utf-8'), obj.last_modified,
@@ -105,10 +105,10 @@ def train_model():
     # Test artifact
     with open("tests/data/artifact_folder/test.txt", "w") as f:
         f.write("hello world!")
-    mlflow.log_artifact("tests/data/artifact_folder/test.txt", "testlocation")
+    mlflow.log_artifact("tests/data/artifact_folder/test.txt", "mlflow")
 
 if __name__ == "__main__":
-    # set_env_vars()
+    set_env_vars()
     print("Running the test script ...")
     # create_s3_bucket()
     train_model()
