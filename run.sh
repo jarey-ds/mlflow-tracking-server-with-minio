@@ -26,4 +26,7 @@ mkdir -p $FILE_DIR && mlflow server \
     --backend-store-uri ${FILE_DIR} \
     --host 0.0.0.0 \
     --port $PORT \
-    --default-artifact-root s3://mlflow/
+    --artifacts-destination s3://mlflow/ \
+    --serve-artifacts
+
+
